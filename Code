@@ -1,0 +1,50 @@
+
+// LEDs from Unreal Engine to Arduino
+// You need an Arduino Uno, LEDs, wires, and breadboard
+// You also need basic knowledge of Unreal Engine, including Blueprints and UMG
+
+char inChar;
+
+int redLED = 7;
+int greenLED = 8;
+int blueLED = 4;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(redLED, OUTPUT);
+  pinMode(blueLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+}
+
+void loop() {
+
+  if (!Serial.available()) return;
+  while (Serial.available()) {
+    inChar = Serial.read();
+    doStuff();
+  }
+}
+
+
+void doStuff() {
+
+  if (inChar == '0') {
+    digitalWrite(redLED, HIGH);
+    digitalWrite(greenLED, LOW);
+    digitalWrite(blueLED, LOW);
+  }
+
+  if (inChar == '1') {
+    digitalWrite(redLED, LOW);
+    digitalWrite(greenLED, HIGH);
+    digitalWrite(blueLED, LOW);
+  }
+
+  if (inChar == '2') {
+    digitalWrite(redLED, LOW);
+    digitalWrite(greenLED, LOW);
+    digitalWrite(blueLED, HIGH);
+  }
+  delay(5);
+}
